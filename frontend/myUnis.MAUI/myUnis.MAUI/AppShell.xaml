@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+	x:Class="myUnis.MAUI.AppShell"
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:views="clr-namespace:myUnis.MAUI.Views"
+	xmlns:local="clr-namespace:myUnis.MAUI">
+
+	<TabBar>
+		<ShellContent
+			Title="CampusFeeds"
+			Icon="iconlistdetail.png"
+			ContentTemplate="{DataTemplate views:CampusFeedsPage}" />
+		<ShellContent
+			Title="Marketplace"
+			Icon="iconlistdetail.png"
+			ContentTemplate="{DataTemplate views:MarketplacePage}" />
+		<ShellContent
+			Title="Chat"
+			Icon="iconsample.png"
+			ContentTemplate="{DataTemplate views:ChatPage}" />
+		<ShellContent
+			Title="Navigator"
+			Icon="iconmap.png"
+			ContentTemplate="{DataTemplate views:NavigatorPage}" />
+	</TabBar>
+</Shell>

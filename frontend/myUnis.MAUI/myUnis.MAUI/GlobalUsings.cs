@@ -1,0 +1,14 @@
+﻿global using CommunityToolkit.Maui;
+global using myUnis.MAUI.Models;
+global using myUnis.MAUI.Services;
+global using CommunityToolkit.Mvvm.ComponentModel;
+global using CommunityToolkit.Mvvm.Input;
+global using myUnis.MAUI.ViewModels;
+global using myUnis.MAUI.Views;
+global using System.Collections.ObjectModel;
+global using System.ComponentModel;
+global using System.Diagnostics;
+global using System.Globalization;
+global using System.Runtime.CompilerServices;
+global using System.Text.Json;
+global using System.Threading.Tasks;
