@@ -3,9 +3,9 @@
 	x:Class="myUnis.MAUI.AppShell"
 	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	xmlns:views="clr-namespace:myUnis.MAUI.Views"
-	xmlns:local="clr-namespace:myUnis.MAUI">
-
+	xmlns:views="clr-namespace:myUnis.MAUI.Views">
+	
+	
 	<TabBar>
 		<ShellContent
 			Title="CampusFeeds"
@@ -13,7 +13,7 @@
 			ContentTemplate="{DataTemplate views:CampusFeedsPage}" />
 		<ShellContent
 			Title="Marketplace"
-			Icon="iconlistdetail.png"
+			Icon="iconlistdetail.svg"
 			ContentTemplate="{DataTemplate views:MarketplacePage}" />
 		<ShellContent
 			Title="Chat"

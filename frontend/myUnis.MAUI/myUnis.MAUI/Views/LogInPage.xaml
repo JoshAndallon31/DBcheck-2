@@ -1,0 +1,110 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:myUnis.MAUI.ViewModels"
+             x:Class="myUnis.MAUI.Views.LogInPage"
+             Title="Log in Page"
+             BackgroundColor="#FFF6F6">
+    <StackLayout VerticalOptions="CenterAndExpand" Padding="30">
+        <ContentPage.BindingContext>
+            <viewModels:LoginViewModel />
+        </ContentPage.BindingContext>
+        <!-- Logo for the app -->
+        <Image Source="logo.png" HorizontalOptions="CenterAndExpand" TranslationY="-100" />
+
+        <!-- Welcome User -->
+        <Label  VerticalOptions="CenterAndExpand" HorizontalOptions="Start" TranslationY="-150">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="Welcome " TextColor="Black" FontFamily="PoppinsRegular" FontAttributes="Bold" FontSize="30"/>
+                    <Span Text="User!" TextColor="Teal" FontFamily="PoppinsRegular" FontAttributes="Bold" FontSize="30" />
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+
+        <!-- Log in to continue -->
+        <Label Text="Log in to continue."  TextColor="Black" FontSize="15" FontFamily="PoppinsRegular" VerticalOptions="Start" HorizontalOptions="Start" TranslationY="-140"/>
+
+        <!-- Username Entry with Image -->
+        
+        <Label Text="Username"  TextColor= "Black" FontFamily="PoppinsRegular" FontSize="Small" HorizontalOptions="Start" TranslationY="-120"/>
+        <Grid TranslationY="-115">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="1" Stroke="Teal" StrokeThickness="1" >
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="40,0,0,40" />
+                </Border.StrokeShape>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Image Source="username.png" WidthRequest="20" HeightRequest="20" HorizontalOptions="Start" Margin="5,0,0,0" />
+                    <Entry Grid.Column="1"  Placeholder="Enter username" Text ="{Binding Username}" TextColor="Black" />
+                </Grid>
+            </Border>
+        </Grid>
+
+       
+        
+
+        <!-- Password Entry with Image -->
+        <Label Text="Password" TextColor="Black" FontFamily="PoppinsRegular" FontSize="Small" HorizontalOptions="Start" TranslationY="-110"/>
+        <Grid TranslationY="-105">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="1" Stroke="Teal" StrokeThickness="1">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="40,0,0,40" />
+                </Border.StrokeShape>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Image Source="password.png" WidthRequest="20" HeightRequest="20" HorizontalOptions="Start" Margin="5,0,0,0" />
+                    <Entry Grid.Column="1" Placeholder="Enter password" IsPassword="True" Text="{Binding Password}" x:Name="passwordEntry" TextColor="Black" />
+                    <ImageButton Source="Images/hidepass.png" WidthRequest="20" HeightRequest="20" x:Name="eyeButton" TranslationX="325" Clicked="OnEyeButtonClicked"></ImageButton> 
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- Remember me and Forgot Password -->
+        <Grid TranslationY="-100">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <CheckBox Grid.Column="0" IsChecked="{Binding RememberMe}" Color="Teal" VerticalOptions="CenterAndExpand" />
+            <Label Grid.Column="1" Text="Remember me " TextColor="Black" FontFamily="PoppinsRegular" VerticalOptions="CenterAndExpand" />
+            <Label Grid.Column="2" Text="Forgot Password?" FontFamily="PoppinsRegular" TextColor="Teal" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" />
+        </Grid>
+
+        <!-- Log in Button -->
+        <Button Text="Log in" BackgroundColor="Teal" FontFamily="PoppinsRegular" TextColor="White" TranslationY="-85"/>
+
+        <!-- Sign up -->
+        
+        <Label Text="Sign up." TextColor="Teal" FontFamily="PoppinsRegular" HorizontalOptions="CenterAndExpand" TranslationY="-75" />
+        
+        <Grid HorizontalOptions="Center" VerticalOptions="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Text="Enable Biometrics" TextColor="Black" FontFamily="PoppinsRegular"  FontSize="15" FontAttributes="Bold"  TranslationY="-30" TranslationX="30"></Label>
+            <ImageButton Grid.Column="1" Source="Images/fingerprint.png" HeightRequest="50" WidthRequest="50"  Clicked="OnClickedFingerprint" x:Name="Fingerprint" TranslationY="10" TranslationX="-53"></ImageButton>
+        </Grid>
+
+        
+        
+        
+        
+        
+    </StackLayout>
+</ContentPage>
