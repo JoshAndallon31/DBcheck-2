@@ -7,25 +7,30 @@ public class LoginViewModel : INotifyPropertyChanged
     public event PropertyChangedEventHandler PropertyChanged;
     private readonly IAlertService _alertService;
 
-    public LoginViewModel()
+    public LoginViewModel() : this(new AlertService())
     {
+
        
-        LoadCredentials();
-        
+
     }
-    public LoginViewModel(IAlertService _alertService)
+
+    public LoginViewModel(IAlertService alertService)
     {
-        this._alertService = _alertService;
-        
-    } 
+        _alertService = alertService;
+        LoadCredentials();
+        LoginLabelText = "Remember me.";
+
+    }
+
     protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
-   
-  
+
+
     private string _username;
+
     public string Username
     {
         get => _username;
@@ -37,6 +42,7 @@ public class LoginViewModel : INotifyPropertyChanged
     }
 
     private string _password;
+
     public string Password
     {
         get => _password;
@@ -47,27 +53,49 @@ public class LoginViewModel : INotifyPropertyChanged
         }
     }
 
-    
 
+
+  
+
+    private string _loginLabelText;
+
+    public string LoginLabelText
+    {
+        get { return _loginLabelText; }
+        set
+        {
+            if (_loginLabelText != value)
+            {
+                _loginLabelText = value;
+                OnPropertyChanged(nameof(LoginLabelText));
+            }
+        }
+    }
+    
+    
     private bool _rememberMe;
-    public bool RememberMe
+    public  bool RememberMe
     {
         get => _rememberMe;
         set
         {
             _rememberMe = value;
             OnPropertyChanged();
-            
+
             // If the checkbox is checked, save the credentials
             if (value)
             {
+               
+                
                 _SaveCredentials();
+               LoginLabelText = "Remove credentials.";
             }
 
             // Otherwise, remove the credentials
             else
             {
                 _RemoveCredentials();
+                LoginLabelText = "Remember me.";
             }
         }
     }
@@ -76,14 +104,13 @@ public class LoginViewModel : INotifyPropertyChanged
     {
         try
         {
-
-
             // Get the username and password from the input fields
             var username = Username;
             var password = Password;
-            if(string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
                 await _alertService.ShowAlertAsync("Error", "Username or Password is empty");
+                RememberMe = false;
                 return;
             }
 
@@ -97,14 +124,14 @@ public class LoginViewModel : INotifyPropertyChanged
         }
     }
 
-    private  async void _RemoveCredentials()
+    private async void _RemoveCredentials()
     {
         // Remove the username and password from the Secure Storage
         SecureStorage.Remove("username");
         SecureStorage.Remove("password");
 
     }
-    
+
     private async void LoadCredentials()
     {
         // Try to get the username and password from the Secure Storage
@@ -120,5 +147,5 @@ public class LoginViewModel : INotifyPropertyChanged
             RememberMe = true;
         }
     }
-}
 
+}

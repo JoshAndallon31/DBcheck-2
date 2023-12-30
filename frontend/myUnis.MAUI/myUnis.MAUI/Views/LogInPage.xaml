@@ -42,7 +42,7 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Image Source="username.png" WidthRequest="20" HeightRequest="20" HorizontalOptions="Start" Margin="5,0,0,0" />
-                    <Entry Grid.Column="1"  Placeholder="Enter username" Text ="{Binding Username}" TextColor="Black" />
+                    <Entry Grid.Column="1"  Placeholder="Enter username" Text ="{Binding Username}" x:Name="UsernameEntry" TextColor="Black" />
                 </Grid>
             </Border>
         </Grid>
@@ -81,30 +81,24 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <CheckBox Grid.Column="0" IsChecked="{Binding RememberMe}" Color="Teal" VerticalOptions="CenterAndExpand" />
-            <Label Grid.Column="1" Text="Remember me " TextColor="Black" FontFamily="PoppinsRegular" VerticalOptions="CenterAndExpand" />
-            <Label Grid.Column="2" Text="Forgot Password?" FontFamily="PoppinsRegular" TextColor="Teal" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" />
+            <Label  Grid.Column="1" Text="{Binding LoginLabelText}" TextColor="Black" FontFamily="PoppinsRegular" VerticalOptions="CenterAndExpand" />
+            <Label Grid.Column="2" Text="Forgot Password?" FontFamily="PoppinsRegular" TextColor="Teal" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnForgotPasswordLabelTapped" />
+                </Label.GestureRecognizers>
+            </Label>
+
         </Grid>
 
         <!-- Log in Button -->
-        <Button Text="Log in" BackgroundColor="Teal" FontFamily="PoppinsRegular" TextColor="White" TranslationY="-85"/>
+        <Button Text="Log in" BackgroundColor="Teal" FontFamily="PoppinsRegular" x:Name="Loginbutton" Clicked="LoginButton" TextColor="White" TranslationY="-85"/>
 
         <!-- Sign up -->
         
         <Label Text="Sign up." TextColor="Teal" FontFamily="PoppinsRegular" HorizontalOptions="CenterAndExpand" TranslationY="-75" />
         
-        <Grid HorizontalOptions="Center" VerticalOptions="Center">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Label Text="Enable Biometrics" TextColor="Black" FontFamily="PoppinsRegular"  FontSize="15" FontAttributes="Bold"  TranslationY="-30" TranslationX="30"></Label>
-            <ImageButton Grid.Column="1" Source="Images/fingerprint.png" HeightRequest="50" WidthRequest="50"  Clicked="OnClickedFingerprint" x:Name="Fingerprint" TranslationY="10" TranslationX="-53"></ImageButton>
-        </Grid>
-
         
+        <Label x:Name="CountdownLabel" HorizontalOptions="Center"></Label>
         
-        
-        
-        
-    </StackLayout>
+</StackLayout>
 </ContentPage>
