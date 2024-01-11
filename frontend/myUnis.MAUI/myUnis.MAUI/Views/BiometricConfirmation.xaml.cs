@@ -15,6 +15,6 @@ public partial class BiometricConfirmation : ContentPage
 
     private void OnClicked(object? sender, EventArgs e)
     {
-       
+
     }
 }

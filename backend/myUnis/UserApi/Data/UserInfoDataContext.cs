@@ -30,6 +30,7 @@ public class UserInfoDataContext : DbContext
             p.ToTable("UsersInfos");
             p.HasKey(x => x.UserId);
             p.HasIndex(u => u.UserName).IsUnique();
+            p.Property(x => x.PasswordSalt).HasMaxLength(255);
         });
     }
 }
