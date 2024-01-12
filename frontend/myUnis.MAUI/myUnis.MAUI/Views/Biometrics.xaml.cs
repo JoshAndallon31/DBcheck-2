@@ -10,7 +10,7 @@ namespace myUnis.MAUI.Views
 {
     public partial class Biometrics : ContentPage
     {
-        private bool userChoice;
+        private bool _userChoice;
 
         public Biometrics()
         {
@@ -19,7 +19,7 @@ namespace myUnis.MAUI.Views
 
         private async void Button_OnClicked(object sender, EventArgs e)
         {
-            if (userChoice)
+            if (_userChoice)
             {
                 var hasFingerprint = await CrossFingerprint.Current.IsAvailableAsync(true);
 
@@ -45,7 +45,7 @@ namespace myUnis.MAUI.Views
 
         private void Switch_OnToggled(object sender, ToggledEventArgs e)
         {
-            userChoice = e.Value;
+            _userChoice = e.Value;
         }
         private async  void returnButton(object sender, EventArgs e)
         {

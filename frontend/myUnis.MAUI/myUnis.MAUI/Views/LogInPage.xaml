@@ -47,10 +47,7 @@
             </Border>
         </Grid>
 
-       
-        
-
-        <!-- Password Entry with Image -->
+       <!-- Password Entry with Image -->
         <Label Text="Password" TextColor="Black" FontFamily="PoppinsRegular" FontSize="Small" HorizontalOptions="Start" TranslationY="-110"/>
         <Grid TranslationY="-105">
             <Grid.ColumnDefinitions>
@@ -67,7 +64,7 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Image Source="password.png" WidthRequest="20" HeightRequest="20" HorizontalOptions="Start" Margin="5,0,0,0" />
-                    <Entry Grid.Column="1" Placeholder="Enter password" IsPassword="True" Text="{Binding Password}" x:Name="passwordEntry" TextColor="Black" />
+                    <Entry Grid.Column="1" Placeholder="Enter password" IsPassword="True" Text="{Binding Password}" x:Name="PasswordEntry" TextColor="Black" />
                     <ImageButton Source="Images/hidepass.png" WidthRequest="20" HeightRequest="20" x:Name="eyeButton" TranslationX="325" Clicked="OnEyeButtonClicked"></ImageButton> 
                 </Grid>
             </Border>
@@ -95,7 +92,12 @@
 
         <!-- Sign up -->
         
-        <Label Text="Sign up." TextColor="Teal" FontFamily="PoppinsRegular" HorizontalOptions="CenterAndExpand" TranslationY="-75" />
+        <Label Text="Sign up." TextColor="Teal" FontFamily="PoppinsRegular" HorizontalOptions="CenterAndExpand" TranslationY="-75">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnSignUpLabelTapped" />
+            </Label.GestureRecognizers>
+        </Label>
+
         
         
         <Label x:Name="CountdownLabel" HorizontalOptions="Center"></Label>

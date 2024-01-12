@@ -1,21 +1,14 @@
+using myUnis.MAUI.Interfaces;
+
 namespace myUnis.MAUI.Views;
 using System;
-using Xamarin.Forms;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Plugin.Fingerprint;
-using Plugin.Fingerprint.Abstractions;
-using Xamarin.Essentials;
-
-
-
-public partial class LogInPage : ContentPage , INotifyPropertyChanged
+public partial class LogInPage :   INotifyPropertyChanged
 {
-    IDispatcherTimer timer;
-    private int counter;
-    private int value;
+    private readonly ILogInRepository _logInRepository = new LogInService();
+    private readonly IDispatcherTimer _timer;
+    private int _counter;
+    private int _value;
     private DateTime _startTime;
     private string _countdownText { get; set; } 
     public string CountdownText
@@ -33,54 +26,55 @@ public partial class LogInPage : ContentPage , INotifyPropertyChanged
     public LogInPage()
     {
         InitializeComponent();
-       
-        timer = Application.Current.Dispatcher.CreateTimer();
-        timer.Interval = TimeSpan.FromSeconds(1);
-        timer.Tick += Timer_Tick;
-        counter = 0;
+        _timer = Application.Current.Dispatcher.CreateTimer();
+        _timer.Interval = TimeSpan.FromSeconds(1);
+        _timer.Tick += Timer_Tick;
+        _counter = 0;
+        var CountdownLabel = new Label
+        {
+            FontSize = 15,
+            TextColor = Colors.Red,
+            FontFamily = "PoppinsRegular",
+            
+        };
         CountdownLabel.BindingContext = this;
-        CountdownLabel.FontSize = 15;
-        CountdownLabel.TextColor = Colors.Red;
-        CountdownLabel.FontFamily = "PoppinsRegular";
         CountdownLabel.SetBinding(Label.TextProperty, "CountdownText");
-        
     }
     private void OnEyeButtonClicked(object sender, EventArgs e)
     {
-        passwordEntry.IsPassword = !passwordEntry.IsPassword;
-        eyeButton.Source = passwordEntry.IsPassword ? "hidepass.png" : "showpass.png";
+        PasswordEntry.IsPassword = !PasswordEntry.IsPassword;
+        eyeButton.Source = PasswordEntry.IsPassword ? "hidepass.png" : "showpass.png";
     }
-    
-
-    
 
     readonly Dictionary<string, int> _lockoutCounts = new Dictionary<string, int>();
-    const int _lockoutDuration = 1;
+    const double _LockoutDurationInMinutes = 0.5;
+    
     private async void LoginButton(object sender, EventArgs e)
     {
-        if (string.IsNullOrEmpty(UsernameEntry.Text) || string.IsNullOrEmpty(passwordEntry.Text))
+       // UserInfo userInfo = await _logInRepository.Login(UsernameEntry.Text, PasswordEntry.Text);
+        if (string.IsNullOrEmpty(UsernameEntry.Text) || string.IsNullOrEmpty(PasswordEntry.Text))
         {
             await DisplayAlert("Error", "Please enter both username and password.", "OK");
         }
-        else if (UsernameEntry.Text.Equals("admin") && passwordEntry.Text.Equals("admin"))
+        // replace else if condition with (userinfo != null)
+        else if (UsernameEntry.Text == "admin" && PasswordEntry.Text == "admin")
         {
-           
             await DisplayAlert("Success", "Login Successful!", "OK");
             Application.Current.MainPage = new NavigationPage(new Biometrics());
         }
         else
         {
-            counter++;
-            if (counter == 4)
+            _counter++;
+            if (_counter == 4)
             {
                 CountdownLabel.IsVisible = true;
                 Loginbutton.IsEnabled = false;
                 UsernameEntry.IsEnabled = false;
-                passwordEntry.IsEnabled = false;
-                if(_lockoutCounts.TryGetValue(UsernameEntry.Text,out value))
+                PasswordEntry.IsEnabled = false;
+                if(_lockoutCounts.TryGetValue(UsernameEntry.Text,out _value))
                 {
-                    _lockoutCounts[UsernameEntry.Text] = ++value;
-                    if (value == 3)
+                    _lockoutCounts[UsernameEntry.Text] = ++_value;
+                    if (_value == 3)
                     {
                         Application.Current.MainPage = new NavigationPage(new ForgetPasswordPage());
                         _lockoutCounts[UsernameEntry.Text] = 0;
@@ -91,7 +85,7 @@ public partial class LogInPage : ContentPage , INotifyPropertyChanged
                 {
                     _lockoutCounts.TryAdd(UsernameEntry.Text, 1);
                 }
-                timer.Start();
+                _timer.Start();
                 _startTime = DateTime.Now;
                 
             }
@@ -105,14 +99,14 @@ public partial class LogInPage : ContentPage , INotifyPropertyChanged
     {
         var username = UsernameEntry.Text;
         var lockoutCount = _lockoutCounts[username];
-        var remainingTime = TimeSpan.FromMinutes(_lockoutDuration * lockoutCount) - (DateTime.Now - _startTime);
+        var remainingTime = TimeSpan.FromMinutes(_LockoutDurationInMinutes * lockoutCount) - (DateTime.Now - _startTime);
         if (remainingTime <= TimeSpan.Zero)
         {
-            timer.Stop();
-            counter = 0;
+            _timer.Stop();
+            _counter = 0;
             Loginbutton.IsEnabled = true;
             UsernameEntry.IsEnabled = true;
-            passwordEntry.IsEnabled = true;
+            PasswordEntry.IsEnabled = true;
             CountdownLabel.IsVisible = false;
            
         }
@@ -127,10 +121,12 @@ public partial class LogInPage : ContentPage , INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
     
-    private async void OnForgotPasswordLabelTapped(object sender, EventArgs e)
+    private  void OnForgotPasswordLabelTapped(object sender, EventArgs e)
     {
         Application.Current.MainPage = new NavigationPage(new ForgetPasswordPage());
     }
-   
-    
+    private  void OnSignUpLabelTapped(object sender, EventArgs e)
+    {
+       //Put here the navigation of sign up page
+    }
 }

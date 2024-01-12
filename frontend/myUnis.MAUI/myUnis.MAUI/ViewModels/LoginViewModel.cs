@@ -81,16 +81,12 @@ public class LoginViewModel : INotifyPropertyChanged
         {
             _rememberMe = value;
             OnPropertyChanged();
-
             // If the checkbox is checked, save the credentials
             if (value)
             {
-               
-                
                 _SaveCredentials();
                LoginLabelText = "Remove credentials.";
             }
-
             // Otherwise, remove the credentials
             else
             {
@@ -113,7 +109,6 @@ public class LoginViewModel : INotifyPropertyChanged
                 RememberMe = false;
                 return;
             }
-
             // Save them securely using the Secure Storage class
             await SecureStorage.SetAsync("username", username);
             await SecureStorage.SetAsync("password", password);
@@ -129,15 +124,12 @@ public class LoginViewModel : INotifyPropertyChanged
         // Remove the username and password from the Secure Storage
         SecureStorage.Remove("username");
         SecureStorage.Remove("password");
-
     }
-
     private async void LoadCredentials()
     {
         // Try to get the username and password from the Secure Storage
         var username = await SecureStorage.GetAsync("username");
         var password = await SecureStorage.GetAsync("password");
-
         // If they are not null, fill the input fields with them
         if (username != null && password != null)
         {
@@ -147,5 +139,4 @@ public class LoginViewModel : INotifyPropertyChanged
             RememberMe = true;
         }
     }
-
 }
